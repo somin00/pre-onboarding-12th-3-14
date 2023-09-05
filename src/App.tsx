@@ -7,7 +7,7 @@ import SearchSection from 'components/SearchSection';
 function App() {
   return (
     <AppWrapper>
-      <h1>질환명 검색하기</h1>
+      <h1 className='a11y-hidden'>질환명 검색하기</h1>
       <SearchSection />
     </AppWrapper>
   );
@@ -22,12 +22,4 @@ const AppWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #d0e8fd;
-
-  h1 {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: polygon(0 0, 0 0, 0 0);
-  }
 `;

@@ -6,7 +6,10 @@ function SearchBox() {
   return (
     <SearchBoxWrapper>
       <img src='/assets/glass.svg' alt='돋보기' width='20' height='20' />
-      <input type='text' />
+      <label htmlFor='seach-word' className='a11y-hidden'>
+        검색어 입력창
+      </label>
+      <input type='text' id='seach-word' placeholder='질환명을 입력해 주세요.' />
       <button type='button'>검색</button>
     </SearchBoxWrapper>
   );
@@ -14,7 +17,7 @@ function SearchBox() {
 
 export default SearchBox;
 
-const SearchBoxWrapper = styled.div`
+const SearchBoxWrapper = styled.form`
   border-radius: 30px;
   overflow: hidden;
   display: flex;
@@ -22,6 +25,10 @@ const SearchBoxWrapper = styled.div`
   background-color: #fff;
   margin-bottom: 20px;
   padding-left: 20px;
+
+  &:focus-within {
+    outline: 2px solid blue;
+  }
 
   img {
     width: 20px;
@@ -35,6 +42,10 @@ const SearchBoxWrapper = styled.div`
     border: none;
     font-size: 1.2rem;
     padding-left: 10px;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   button {
