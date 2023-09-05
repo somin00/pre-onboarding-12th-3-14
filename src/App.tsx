@@ -16,10 +16,8 @@ function App() {
 export default App;
 
 const AppWrapper = styled.div`
-  height: 100vh;
-  padding-top: 100px;
+  padding: 100px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #d0e8fd;
 `;
