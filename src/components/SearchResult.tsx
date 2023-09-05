@@ -1,19 +1,27 @@
 import React from 'react';
 
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 
 import RecommendedTerm from 'components/RecommendedTerm';
+import { searchResultState } from 'store/searchResult';
 
 function SearchResult() {
+  const searchResultList = useRecoilValue(searchResultState);
   return (
     <SearchResultWrapper>
-      <h3>추천 검색어</h3>
-      <ul>
-        <RecommendedTerm />
-        <RecommendedTerm />
-        <RecommendedTerm />
-        <RecommendedTerm />
-      </ul>
+      {searchResultList.length === 0 ? (
+        '검색어가 없음'
+      ) : (
+        <>
+          <h3>추천 검색어</h3>
+          <ul>
+            {searchResultList.map(({ sickCd, sickNm }) => (
+              <RecommendedTerm key={sickCd} keyword={sickNm} />
+            ))}
+          </ul>
+        </>
+      )}
     </SearchResultWrapper>
   );
 }
@@ -22,19 +30,17 @@ export default SearchResult;
 
 const SearchResultWrapper = styled.div`
   background-color: #fff;
-  width: 502px;
+  width: 522px;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  padding-bottom: 10px;
+  padding: 10px;
   border-radius: 16px;
 
   h3 {
     font-weight: 500;
     color: gray;
     font-size: 0.8rem;
-    margin: 0;
-    margin-bottom: 10px;
+    margin: 10px 20px;
   }
 
   ul {

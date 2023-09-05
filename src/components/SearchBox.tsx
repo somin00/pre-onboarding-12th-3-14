@@ -1,15 +1,31 @@
-import React from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 import { styled } from 'styled-components';
 
+import useDebounce from 'hooks/useDebounce';
+import useFetch from 'hooks/useFetch';
+
 function SearchBox() {
+  const [input, setInput] = useState<string>('');
+  const debouncedValue = useDebounce(input);
+  useFetch(debouncedValue);
+
+  const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setInput(e.currentTarget.value);
+  };
   return (
     <SearchBoxWrapper>
       <img src='/assets/glass.svg' alt='돋보기' width='20' height='20' />
       <label htmlFor='seach-word' className='a11y-hidden'>
         검색어 입력창
       </label>
-      <input type='text' id='seach-word' placeholder='질환명을 입력해 주세요.' />
+      <input
+        type='text'
+        id='seach-word'
+        value={input}
+        onChange={changeInput}
+        placeholder='질환명을 입력해 주세요.'
+      />
       <button type='button'>검색</button>
     </SearchBoxWrapper>
   );
