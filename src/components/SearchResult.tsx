@@ -6,8 +6,12 @@ import { styled } from 'styled-components';
 import RecommendedTerm from 'components/RecommendedTerm';
 import { searchResultState } from 'store/searchResult';
 
-function SearchResult() {
+interface SearchResultPropsType {
+  focusIndex: number;
+}
+function SearchResult({ focusIndex }: SearchResultPropsType) {
   const searchResultList = useRecoilValue(searchResultState);
+
   return (
     <SearchResultWrapper>
       {searchResultList.length === 0 ? (
@@ -16,9 +20,10 @@ function SearchResult() {
         <>
           <h3>추천 검색어</h3>
           <ul>
-            {searchResultList.map(({ sickCd, sickNm }) => (
-              <RecommendedTerm key={sickCd} keyword={sickNm} />
-            ))}
+            {searchResultList.map(({ sickCd, sickNm }, index) => {
+              const isFocus = index === focusIndex;
+              return <RecommendedTerm key={sickCd} keyword={sickNm} isFocus={isFocus} />;
+            })}
           </ul>
         </>
       )}

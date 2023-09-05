@@ -1,18 +1,42 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, Dispatch, KeyboardEvent, SetStateAction, useState } from 'react';
 
 import { styled } from 'styled-components';
 
 import useDebounce from 'hooks/useDebounce';
 import useFetch from 'hooks/useFetch';
 
-function SearchBox() {
+interface SearchBoxPropsType {
+  isAutoSearch: boolean;
+  setIsAutoSearch: Dispatch<SetStateAction<boolean>>;
+  autoKeyword: string;
+  setFocusIndex: Dispatch<SetStateAction<number>>;
+  pressKey: (e: KeyboardEvent<HTMLInputElement>) => void;
+}
+function SearchBox({
+  isAutoSearch,
+  setIsAutoSearch,
+  autoKeyword,
+  setFocusIndex,
+  pressKey,
+}: SearchBoxPropsType) {
   const [input, setInput] = useState<string>('');
   const debouncedValue = useDebounce(input);
   useFetch(debouncedValue);
 
   const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    if (isAutoSearch) {
+      const nativeEvent = e.nativeEvent as InputEvent;
+      const additionalValue =
+        nativeEvent.inputType === 'deleteContentBackward' ? '' : nativeEvent.data;
+      if (additionalValue === null) return;
+      setInput(autoKeyword + additionalValue);
+      setIsAutoSearch(false);
+      setFocusIndex(-1);
+      return;
+    }
     setInput(e.currentTarget.value);
   };
+
   return (
     <SearchBoxWrapper>
       <img src='/assets/glass.svg' alt='돋보기' width='20' height='20' />
@@ -22,8 +46,9 @@ function SearchBox() {
       <input
         type='text'
         id='seach-word'
-        value={input}
+        value={isAutoSearch ? autoKeyword : input}
         onChange={changeInput}
+        onKeyDown={pressKey}
         placeholder='질환명을 입력해 주세요.'
       />
       <button type='button'>검색</button>
