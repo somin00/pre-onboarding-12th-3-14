@@ -15,7 +15,6 @@ function useFetch(debouncedValue: string) {
     }
 
     getSearchWords(debouncedValue).then(res => {
-      console.info('calling api');
       setResultList(res);
     });
   }, [debouncedValue, setResultList]);
