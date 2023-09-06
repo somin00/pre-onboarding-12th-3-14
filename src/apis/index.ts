@@ -1,7 +1,7 @@
+import { BASE_URL } from 'constants/apiConfig';
+
 import axios from 'axios';
 import { getCachedData, setCachedData } from 'utils/cache';
-
-const BASE_URL = 'http://localhost:4000/sick';
 
 export const getSearchWords = async (debouncedValue: string) => {
   try {

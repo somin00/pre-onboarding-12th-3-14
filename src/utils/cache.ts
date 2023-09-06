@@ -1,7 +1,6 @@
-import { SearchResultType } from 'store/searchResult';
+import { HEADER_FETCH_DATE, EXPIRE_TIME } from 'constants/cacheConfig';
 
-const HEADER_FETCH_DATE = 'fetch-date';
-const EXPIRE_TIME = 1000 * 60 * 10;
+import { SearchResultType } from 'store/searchResult';
 
 export const checkIsExpired = (cacheResponse: Response) => {
   const cachedData = cacheResponse.headers.get(HEADER_FETCH_DATE);
